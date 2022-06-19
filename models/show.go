@@ -14,3 +14,10 @@ type Show struct {
 	Time     time.Time `json:"time,omitempty"`
 	Seats    []Seat    `json:"seats,omitempty"`
 }
+
+type FetchResponse struct {
+	Cinema         string `json:"cinema,omitempty"`
+	ScreenNumber   int    `json:"screenNumber,omitempty"`
+	Movie          string `json:"movie,omitempty"`
+	AvailableSeats []Seat
+}

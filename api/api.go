@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-const cinemaServer = "http://cinema-service.com"
+const cinemaServer = "http://localhost:8081"
 
 // Fetch attempts to retrieve all details for a given show, including available seats
 func Fetch(w http.ResponseWriter, r *http.Request) {
@@ -32,14 +32,15 @@ func Fetch(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := json.NewDecoder(resp.Body).Decode(&show); err != nil {
+	var response models.FetchResponse
+	if err := json.NewDecoder(resp.Body).Decode(&response); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprint(w, "Could not read resp body")
 		return
 	}
 	defer r.Body.Close()
 
-	gob.NewEncoder(w).Encode(show)
+	json.NewEncoder(w).Encode(response)
 }
 
 // Book sends a booking request to the cinema-server for particular user selected seats
